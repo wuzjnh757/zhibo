@@ -15,9 +15,14 @@ jobs:
           node-version: '18'
       - run: npm install axios
       - run: node generateM3U.js
-      - run: ls -l
-          git config --global user.name 'github-actions'
-          git config --global user.email 'actions@github.com'
-          git add playlist.m3u
-          git commit -m "Update playlist"
-          git push
+      - run: |
+           ls -l
+           if [ -f playlist.m3u ]; then
+           git config --global user.name 'github-actions'
+           git config --global user.email 'actions@github.com'
+           git add playlist.m3u
+           git commit -m "Update playlist"
+           git push
+           else
+           echo "playlist.m3u 未生成，跳过提交"
+           fi
