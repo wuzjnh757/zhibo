@@ -1,9 +1,8 @@
-const fs = require('fs');
-const axios = require('axios');
+import fs from 'fs';
+import axios from 'axios';
 
 async function generateM3U() {
   try {
-    // 调用项目 API 获取直播源
     const res = await axios.get('http://api.hclyz.com:81/multi');
     const data = res.data;
 
