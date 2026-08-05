@@ -1,0 +1,23 @@
+name: Update M3U
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小时运行一次
+  workflow_dispatch:      # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install axios
+      - run: node generateM3U.js
+      - run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'actions@github.com'
+          git add playlist.m3u
+          git commit -m "Update playlist"
+          git push
